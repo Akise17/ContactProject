@@ -3,6 +3,7 @@ lock "~> 3.14.1"
 
 set :application, "ContactProject"
 set :repo_url, "git@https://github.com:Akise17/ContactProject.git"
+set :branch, "master"
 
 # Default branch is :master
 # ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
@@ -11,7 +12,7 @@ set :repo_url, "git@https://github.com:Akise17/ContactProject.git"
 set :deploy_to, "/home/deploy/#{fetch :application}"
 
 # Default value for :format is :airbrussh.
-set :format, :airbrussh
+# set :format, :airbrussh
 
 # You can configure the Airbrussh format using :format_options.
 # These are the defaults.
