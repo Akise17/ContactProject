@@ -39,6 +39,17 @@ set :keep_releases, 5
 # Uncomment the following to require manually verifying the host key before first deploy.
 # set :ssh_options, verify_host_key: :secure
 
+desc "Database config"
+  task :setup_config, roles: :app do
+  # upload you database.yml from config dir to shared dir on server
+  put File.read("config/database.yml"), "#{shared_path}/config/database.yml"
+  # make symlink
+  run "ln -nfs #{shared_path}/config/database.yml #{release_path}/config/database.yml"
+  # upload you database.yml from config dir to shared dir on server
+  put File.read(".env"), "#{shared_path}/config/.env"
+  # make symlink
+  run "ln -nfs #{shared_path}/config/.env #{current_path}/.env"
+end
 
 namespace :deploy do
 
