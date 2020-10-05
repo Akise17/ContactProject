@@ -2,7 +2,7 @@
 lock "~> 3.14.1"
 
 set :application, "ContactProject"
-set :repo_url, "git@https://github.com:Akise17/ContactProject.git"
+set :repo_url, "git@github.com:Akise17/ContactProject.git"
 
 # Default branch is :master
 # ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
