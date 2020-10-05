@@ -43,7 +43,7 @@
 # Global options
 # --------------
  set :ssh_options, {
-   keys: %w(C:/Users/user/.ssh/id_rsa.pub),
+   keys: %w(/home/akise/.ssh/id_rsa.pub),
    forward_agent: false,
    auth_methods: %w(password),
    password: "12345"
