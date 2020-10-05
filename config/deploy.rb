@@ -23,7 +23,7 @@ set :deploy_to, "/home/deploy/#{fetch :application}"
 
 # Default value for :linked_files is []
 # append :linked_files, "config/database.yml"
-set :linked_files, fetch(:linked_files, []).push('config/database.yml', 'config/secrets.yml')
+set :linked_files, %w{config/database.yml config/application.yml}
 # Default value for linked_dirs is []
 # append :linked_dirs, "log", "tmp/pids", "tmp/cache", "tmp/sockets", "vendor/bundle", ".bundle", "public/system", "public/uploads"
 set :linked_dirs, fetch(:linked_dirs, []).push("log", "tmp/pids", "tmp/cache", "tmp/sockets", "vendor/bundle", ".bundle", "public/system", "public/uploads" )
@@ -40,22 +40,22 @@ set :keep_releases, 5
 # set :ssh_options, verify_host_key: :secure
 
 
+
 namespace :deploy do
-
-    # before "deploy:assets:precompile" do
-    #   run ["ln -nfs #{shared_path}/config/settings.yml #{release_path}/config/settings.yml",
-    #       "ln -nfs #{shared_path}/config/database.yml #{release_path}/config/database.yml",
-    #       "ln -fs #{shared_path}/uploads #{release_path}/uploads"
-    #   ].join(" && ")
-    # end
-
     desc 'Restart application'
     task :restart do
       on roles(:app), in: :sequence, wait: 5 do
         execute :touch, release_path.join('tmp/restart.txt')
       end
     end
-
+    task :upload_yml do
+      on roles(:app) do
+        execute "mkdir #{shared_path}/config -p"
+        upload! StringIO.new(File.read("config/database.yml")), "#{shared_path}/config/database.yml"
+        upload! StringIO.new(File.read("config/application.yml")), "#{shared_path}/config/application.yml"
+      end
+    end 
+    # after "deploy:update_code", "deploy:migrate"
     after :publishing, 'deploy:restart'
     after :finishing, 'deploy:cleanup'
 end
