@@ -42,12 +42,12 @@ set :keep_releases, 5
 
 namespace :deploy do
 
-    before "deploy:assets:precompile" do
-      run ["ln -nfs #{shared_path}/config/settings.yml #{release_path}/config/settings.yml",
-          "ln -nfs #{shared_path}/config/database.yml #{release_path}/config/database.yml",
-          "ln -fs #{shared_path}/uploads #{release_path}/uploads"
-      ].join(" && ")
-    end
+    # before "deploy:assets:precompile" do
+    #   run ["ln -nfs #{shared_path}/config/settings.yml #{release_path}/config/settings.yml",
+    #       "ln -nfs #{shared_path}/config/database.yml #{release_path}/config/database.yml",
+    #       "ln -fs #{shared_path}/uploads #{release_path}/uploads"
+    #   ].join(" && ")
+    # end
 
     desc 'Restart application'
     task :restart do
