@@ -39,6 +39,6 @@ require "capistrano/passenger"
 Dir.glob("lib/capistrano/tasks/*.rake").each { |r| import r }
 
 set :rbenv_type, :user
-set :rbenv_ruby, '2.7.1'
+set :rbenv_ruby, '2.6.6'
 # set :ssh_options, {:forward_agent => true}
 # set :deploy_via, :copy
