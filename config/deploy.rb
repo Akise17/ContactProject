@@ -12,7 +12,7 @@ set :repo_url,"https://Akise17:17Desember1994@github.com/Akise17/ContactProject.
 set :deploy_to, "/home/deploy/#{fetch :application}"
 
 # Default value for :format is :airbrussh.
-set :format, :airbrussh
+# set :format, :airbrussh
 
 # You can configure the Airbrussh format using :format_options.
 # These are the defaults.
@@ -22,7 +22,7 @@ set :format, :airbrussh
 # set :pty, true
 
 # Default value for :linked_files is []
-# append :linked_files, "config/database.yml"
+append :linked_files, "config/database.yml"
 
 # Default value for linked_dirs is []
 append :linked_dirs, "log", "tmp/pids", "tmp/cache", "tmp/sockets", "vendor/bundle", ".bundle", "public/system", "public/uploads"
@@ -38,3 +38,16 @@ set :keep_releases, 5
 
 # Uncomment the following to require manually verifying the host key before first deploy.
 # set :ssh_options, verify_host_key: :secure
+
+namespace :deploy do
+
+    desc 'Restart application'
+    task :restart do
+      on roles(:app), in: :sequence, wait: 5 do
+        execute :touch, release_path.join('tmp/restart.txt')
+      end
+    end
+
+    after :publishing, 'deploy:restart'
+    after :finishing, 'deploy:cleanup'
+end
